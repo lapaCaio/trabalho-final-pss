@@ -1,6 +1,11 @@
 package lp.caio;
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import database.DataBaseUtils;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.List;
 import lp.caio.presenter.PresenterLogin;
 import lp.caio.services.ServicoAutenticacao;
 import lp.caio.view.LoginView;
@@ -15,6 +20,15 @@ public class Main {
             UIManager.setLookAndFeel(new FlatDarkLaf());
         } catch (UnsupportedLookAndFeelException e) {
             e.printStackTrace();
+        }
+
+          try (Connection conn = DriverManager.getConnection(DataBaseUtils.URL)) {
+          
+              DataBaseUtils.createTables(conn);
+    
+            
+        } catch (SQLException e) {
+            System.out.println("Erro ao inicializar o banco de dados: " + e.getMessage());
         }
 
         ServicoAutenticacao servicoAutenticacao = new ServicoAutenticacao();
