@@ -8,93 +8,86 @@ import java.util.List;
 import java.util.Objects;
 
 public class User {
-    private final int id;
+    private long id;
     private String name;
-    private String password;
-    private final LocalDate dataCadastro;
-    private double notificacoesLidas;
-    private double notificacoesRecebidas;
-    private Estado estado;
-    private List<Message> mensagens;
+    private String password; 
+    private boolean notUser;
+    private boolean authorized;
+    private LocalDate dtCreation;
+    private Type type;
 
-    private boolean aproved;
-
-    public User(int id, String name, String password, LocalDate dataCadastro, double notificacoesLidas, double notificacoesRecebidas, String estado, List<Message> mensagens, boolean aproved) throws Exception {
-        this.id = id;
-        this.name = name;
-        this.password = password;
-        this.dataCadastro = dataCadastro;
-        this.notificacoesLidas = notificacoesLidas;
-        this.notificacoesRecebidas = notificacoesRecebidas;
-
-        if ("admin".equalsIgnoreCase(estado)) {
-            this.estado = new Admin(this);
-        } else if ("common".equalsIgnoreCase(estado)) {
-            this.estado = new Common(this);
-        } else {
-            throw new Exception();
-        }
-
-        this.mensagens = mensagens;
-        this.aproved = aproved;
+    public enum Type {
+        USER, ADMIN
     }
 
+    public User(String name, String password, boolean notUser, LocalDate dtCreation, Type type) {
+        this.name = name;
+        this.password = password;
+        this.notUser = notUser;
+        this.dtCreation = dtCreation;
+        this.type = type;
+    }
 
-    // Getters e Setters
-
-    public int getId() {
+    public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public double getNotificacoesLidas() {
-        return notificacoesLidas;
+    public boolean isNotUser() {
+        return notUser;
     }
 
-    public void setNotificacoesLidas(double notificacoesLidas) {
-        this.notificacoesLidas = notificacoesLidas;
+    public void setNotUser(boolean notUser) {
+        this.notUser = notUser;
     }
 
-    public double getNotificacoesRecebidas() {
-        return notificacoesRecebidas;
+    public boolean isAuthorized() {
+        return authorized;
     }
 
-    public void setNotificacoesRecebidas(double notificacoesRecebidas) {
-        this.notificacoesRecebidas = notificacoesRecebidas;
+    public void setAuthorized(boolean autorized) {
+        this.authorized = autorized;
     }
 
-    public Estado getEstado() {
-        return estado;
+    public LocalDate getDtCreation() {
+        return dtCreation;
     }
 
-    public void setEstado(Estado estado) {
-        this.estado = estado;
+    public void setDtCreation(LocalDate dtCreation) {
+        this.dtCreation = dtCreation;
     }
 
-    public List<Message> getMensagens() {
-        return mensagens;
+    public Type getType() {
+        return type;
     }
 
-    public void addMensagem(Message mensagem) {
-        this.mensagens.add(mensagem);
+    public void setType(Type type) {
+        this.type = type;
     }
 
-    public LocalDate getDataCadastro() {
-        return dataCadastro;
+    @Override
+    public String toString() {
+        return "ID: " + id + ", Name: " + name + 
+               ", Password: " + password + ", Not User: " + notUser +
+               ", Date of Creation: " + dtCreation + ", Type: " + type;
     }
 }

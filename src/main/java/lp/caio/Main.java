@@ -13,6 +13,7 @@ import lp.caio.view.MainPanel;
 import lp.caio.view.MessageView;
 
 import javax.swing.*;
+import lp.caio.dao.UserDAO;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,22 +23,26 @@ public class Main {
             e.printStackTrace();
         }
 
-          try (Connection conn = DriverManager.getConnection(DataBaseUtils.URL)) {
-          
-              DataBaseUtils.createTables(conn);
-    
-            
+        Connection conn = null;
+        try {
+            conn = DriverManager.getConnection(DataBaseUtils.URL);
+//            DataBaseUtils.dropTables(conn);
+            DataBaseUtils.createTables(conn);
         } catch (SQLException e) {
             System.out.println("Erro ao inicializar o banco de dados: " + e.getMessage());
         }
 
-        ServicoAutenticacao servicoAutenticacao = new ServicoAutenticacao();
+
+        UserDAO userDAO = new UserDAO(conn);
+          
+        ServicoAutenticacao servicoAutenticacao = new ServicoAutenticacao(userDAO);
         PresenterLogin presenterLogin = new PresenterLogin(servicoAutenticacao);
-        LoginView telaLogin = new LoginView();
+        LoginView telaLogin = new LoginView(userDAO, servicoAutenticacao);
+        telaLogin.setUserDAO(userDAO);
         MainPanel telaMain = new MainPanel();
         MessageView telaMensagem = new MessageView();
 
-        presenterLogin.addTela(telaMain); //setar tamanho mínimo
+        presenterLogin.addTela(telaMain); //setar tamanho mínimo;
         presenterLogin.addTela(telaLogin);
         //presenter.addTela(telaMensagem);
     }

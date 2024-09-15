@@ -1,25 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package lp.caio.model;
 
-/**
- *
- * @author tiago
- */
 import java.time.LocalDate;
 
 public class Message {
     private long id;
-    private String titulo;
-    private String mensagem;
-    private LocalDate dataCriacao;
+    private String title;
+    private String content;
+    private LocalDate creationDate;
 
-    public Message(String titulo, String mensagem, LocalDate dataCriacao) {
-        this.titulo = titulo;
-        this.mensagem = mensagem;
-        this.dataCriacao = dataCriacao;
+    public Message(String title, String content, LocalDate creationDate) {
+        this.title = title;
+        this.content = content;
+        this.creationDate = creationDate;
     }
 
     public long getId() {
@@ -30,21 +22,21 @@ public class Message {
         this.id = id;
     }
 
-    public String getTitulo() {
-        return titulo;
+    public String getTitle() {
+        return title;
     }
 
-    public String getMensagem() {
-        return mensagem;
+    public String getContent() {
+        return content;
     }
 
-    public LocalDate getDataCriacao() {
-        return dataCriacao;
+    public LocalDate getCreationDate() {
+        return creationDate;
     }
 
     @Override
     public String toString() {
-        return "ID: " + id + ", Título: " + titulo + 
-               ", Mensagem: " + mensagem + ", Data de Criação: " + dataCriacao;
+        return "ID: " + id + ", Title: " + title + 
+               ", Content: " + content + ", Creation Date: " + creationDate;
     }
 }

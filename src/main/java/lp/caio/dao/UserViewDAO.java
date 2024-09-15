@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package lp.caio.dao;
 
 import lp.caio.model.UserView;
@@ -9,49 +5,45 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author tiago
- */
 public class UserViewDAO {
-    public void insertVisualizacaoUsuario(Connection conn, UserView visualizacaoUsuario) {
-        String sql = "INSERT INTO visualizacao_usuario(idUsuario, idMensagem, lida) VALUES(?, ?, ?)";
+
+    public void insertUserView(Connection conn, UserView userView) {
+        String sql = "INSERT INTO user_view(userId, messageId, read) VALUES(?, ?, ?)";
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setLong(1, visualizacaoUsuario.getIdUsuario());
-            pstmt.setLong(2, visualizacaoUsuario.getIdMensagem());
-            pstmt.setBoolean(3, visualizacaoUsuario.isLida());
+            pstmt.setLong(1, userView.getUserId());
+            pstmt.setLong(2, userView.getMessageId());
+            pstmt.setBoolean(3, userView.isRead());
             pstmt.executeUpdate();
-            System.out.println("Visualização de usuário inserida com sucesso.");
+            System.out.println("UserView inserted successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public List<UserView> selectAllVisualizacoes(Connection conn) {
-        String sql = "SELECT id, idUsuario, idMensagem, lida FROM visualizacao_usuario";
-        List<UserView> visualizacoes = new ArrayList<>();
+    public List<UserView> selectAllUserViews(Connection conn) {
+        String sql = "SELECT id, userId, messageId, read FROM user_view";
+        List<UserView> userViews = new ArrayList<>();
 
-        try (Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(sql)) {
+        try (PreparedStatement pstmt = conn.prepareStatement(sql);
+             ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 long id = rs.getLong("id");
-                long idUsuario = rs.getLong("idUsuario");
-                long idMensagem = rs.getLong("idMensagem");
-                boolean lida = rs.getBoolean("lida");
+                long userId = rs.getLong("userId");
+                long messageId = rs.getLong("messageId");
+                boolean read = rs.getBoolean("read");
 
-                UserView visualizacao = new UserView(idUsuario, idMensagem, lida);
-                visualizacao.setId(id);
-                visualizacoes.add(visualizacao);
+                UserView userView = new UserView(userId, messageId, read);
+                userView.setId(id);
+                userViews.add(userView);
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
-        return visualizacoes;
+        return userViews;
     }
 }

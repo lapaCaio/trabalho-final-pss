@@ -26,7 +26,7 @@ public class MainPanel extends JFrame implements Observer {
         getContentPane().add(desktopPane, BorderLayout.CENTER);
 
         // Adicionar janelas internas
-        adicionarTelaInterna(new LoginView());
+//        adicionarTelaInterna(new LoginView());
         adicionarTelaInterna(new MessageView());
         adicionarTelaInterna(new SendMessageView());
         adicionarTelaInterna(new ChangePasswordView());

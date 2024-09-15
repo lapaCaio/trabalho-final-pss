@@ -1,23 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package lp.caio.model;
 
-/**
- *
- * @author tiago
- */
 public class UserView {
-  private long id;
-    private long idUsuario;
-    private long idMensagem;
-    private boolean lida;
+    private long id;
+    private long userId;
+    private long messageId;
+    private boolean read;
 
-    public UserView(long idUsuario, long idMensagem, boolean lida) {
-        this.idUsuario = idUsuario;
-        this.idMensagem = idMensagem;
-        this.lida = lida;
+    public UserView(long userId, long messageId, boolean read) {
+        this.userId = userId;
+        this.messageId = messageId;
+        this.read = read;
     }
 
     public long getId() {
@@ -28,33 +20,33 @@ public class UserView {
         this.id = id;
     }
 
-    public long getIdUsuario() {
-        return idUsuario;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setIdUsuario(long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public long getIdMensagem() {
-        return idMensagem;
+    public long getMessageId() {
+        return messageId;
     }
 
-    public void setIdMensagem(long idMensagem) {
-        this.idMensagem = idMensagem;
+    public void setMessageId(long messageId) {
+        this.messageId = messageId;
     }
 
-    public boolean isLida() {
-        return lida;
+    public boolean isRead() {
+        return read;
     }
 
-    public void setLida(boolean lida) {
-        this.lida = lida;
+    public void setRead(boolean read) {
+        this.read = read;
     }
 
     @Override
     public String toString() {
-        return "ID: " + id + ", ID Usuário: " + idUsuario + 
-               ", ID Mensagem: " + idMensagem + ", Lida: " + lida;
+        return "ID: " + id + ", User ID: " + userId + 
+               ", Message ID: " + messageId + ", Read: " + read;
     }   
 }

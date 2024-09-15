@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-import lp.caio.message.Message;
+import lp.caio.model.User;
 import lp.caio.services.ServicoAutenticacao;
 import lp.caio.view.LoginView;
-import lp.caio.model.User;
 import lp.caio.view.Observer;
 
 public class PresenterLogin {
@@ -19,18 +18,15 @@ public class PresenterLogin {
     private LoginView view;
     private ServicoAutenticacao servicoAutenticacao;
 
-    // Construtor
     public PresenterLogin(ServicoAutenticacao servicoAutenticacao) {
         this.telas = new ArrayList<>();
         this.servicoAutenticacao = servicoAutenticacao;
     }
 
-    // Método para configurar a view e associar eventos
     public void configurarView(LoginView view) {
         this.view = view;
 
         if (this.view != null) {
-            // Configurar o evento do botão "Acessar"
             view.getBtnLogin().addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -46,21 +42,20 @@ public class PresenterLogin {
 
     private void realizarLogin() throws Exception {
         if (view == null) {
-            // Se a view for null, não é possível realizar o login
             showMessage("Erro na configuração da interface. Tente novamente mais tarde.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
         String userName = view.getTxtUserName().getText();
-        String password = new String(view.getTxtSenha().getPassword()); // Usar `new String` para obter a senha em texto claro
+        String password = new String(view.getTxtSenha().getPassword());
 
-        List<Message> messages = new ArrayList<>();
-        User user = new User(1, userName, password, LocalDate.now(), 2, 8, "admin", messages, true);
+        servicoAutenticacao.inicializarAdmin(userName, password); // Verifica e cria admin se necessário
 
-        boolean loginSucess = servicoAutenticacao.autenticar(user);
+        boolean loginSucess = servicoAutenticacao.autenticar(userName, password);
 
         if (loginSucess) {
-            if (servicoAutenticacao.isAdmin(user)) {
+            User user = servicoAutenticacao.getUser(userName); // Obter usuário para verificar se é admin
+            if (user != null && servicoAutenticacao.isAdmin(user)) {
                 showMessage("Bem-vindo, Administrador!", "Informação", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 showMessage("Bem-vindo, Usuário!", "Informação", JOptionPane.INFORMATION_MESSAGE);
